@@ -135,11 +135,11 @@ customers:
 
 
     {
-        'type': 'takepay',
-        'description': 'Get take for pay deal on selected plan'
-        'product': 'classic',
-        'take': 3,
-        'pay': 2
+        "type": "takepay",
+        "description": "Get take for pay deal on selected plan"
+        "product": "classic",
+        "take": 3,
+        "pay": 2
     }
     {
         'type': 'discount',
