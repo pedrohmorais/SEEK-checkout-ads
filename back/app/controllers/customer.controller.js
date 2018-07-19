@@ -26,13 +26,17 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve and return all customers from the database.
-exports.findAll = (req, res) => {
-    Customer.find()
+async function pvtFindAll(){
+    return await Customer.find()
     .populate({
         path: 'privileges.product',
         model: 'Product'
     })
+}
+
+// Retrieve and return all customers from the database.
+exports.findAll = (req, res) => {
+    pvtFindAll()
     .then(customers => {
         res.send(customers);
     }).catch(err => {
@@ -45,6 +49,10 @@ exports.findAll = (req, res) => {
 // Find a single customer with a id
 exports.findOne = (req, res) => {
     Customer.findById(req.params.id)
+    .populate({
+        path: 'privileges.product',
+        model: 'Product'
+    })
     .then(customer => {
         if(!customer) {
             return res.status(404).send({
@@ -118,3 +126,5 @@ exports.delete = (req, res) => {
         });
     });
 };
+
+

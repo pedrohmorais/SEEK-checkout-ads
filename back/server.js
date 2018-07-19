@@ -36,6 +36,7 @@ app.get('/', (req, res) => {
 require('./app/routes/product.routes.js')(app);
 require('./app/routes/privilege.routes.js')(app);
 require('./app/routes/customer.routes.js')(app);
+require('./app/routes/order.routes.js')(app);
 
 // seed database
 seederProduct.seed()

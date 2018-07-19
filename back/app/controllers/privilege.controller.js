@@ -52,6 +52,7 @@ exports.findAll = (req, res) => {
 // Find a single privilege with a id
 exports.findOne = (req, res) => {
     Privilege.findById(req.params.id)
+    .populate('product')
     .then(privilege => {
         if(!privilege) {
             return res.status(404).send({
