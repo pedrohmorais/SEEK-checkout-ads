@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const seederProduct = require('./app/seeder/product.seeder.js');
+const seederPrivilege = require('./app/seeder/privilege.seeder.js');
 
 // create express app
 const app = express();
@@ -33,9 +34,11 @@ app.get('/', (req, res) => {
 
 // Require Products routes
 require('./app/routes/product.routes.js')(app);
+require('./app/routes/privilege.routes.js')(app);
 
 // seed database
 seederProduct.seed()
+seederPrivilege.seed()
 
 // listen for requests
 app.listen(3000, () => {
