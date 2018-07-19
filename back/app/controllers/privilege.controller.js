@@ -39,6 +39,7 @@ exports.create = (req, res) => {
 // Retrieve and return all privileges from the database.
 exports.findAll = (req, res) => {
     Privilege.find()
+    .populate('product')
     .then(privileges => {
         res.send(privileges);
     }).catch(err => {

@@ -1,4 +1,5 @@
 const Customer = require('../models/customer.model.js');
+const mongoose = require('mongoose');
 
 exports.seed = () => {
     console.log("Seeding customers...");
@@ -10,7 +11,7 @@ exports.seed = () => {
                 {
                     'type': 'takepay',
                     'description': 'Get take for pay deal on selected plan',
-                    'product': '5b4f676843487f5da43df67b',
+                    'product': mongoose.Types.ObjectId('5b4f676843487f5da43df67b'),
                     'take': 3,
                     'pay': 2
                 }
@@ -23,7 +24,7 @@ exports.seed = () => {
                 {
                     'type': 'discount',
                     'description': 'Gets a discount when the number of products are greather or equal minAmount',
-                    'product': '5b4f676843487f5da43df67d',
+                    'product': mongoose.Types.ObjectId('5b4f676843487f5da43df67d'),
                     'minAmount': 0,
                     'priceTo': 299.99
                 }
@@ -36,7 +37,7 @@ exports.seed = () => {
                 {
                     'type': 'discount',
                     'description': 'Gets a discount when the number of products are greather or equal minAmount',
-                    'product': '5b4f676843487f5da43df67c',
+                    'product': mongoose.Types.ObjectId('5b4f676843487f5da43df67c'),
                     'minAmount': 4,
                     'priceTo': 379.99
                 }
@@ -50,21 +51,21 @@ exports.seed = () => {
                 {
                     'type': 'takepay',
                     'description': 'Get take for pay deal on selected plan',
-                    'product': '5b4f676843487f5da43df67b',
+                    'product': mongoose.Types.ObjectId('5b4f676843487f5da43df67b'),
                     'take': 5,
                     'pay': 4
                 },
                 {
                     'type': 'discount',
                     'description': 'Gets a discount when the number of products are greather or equal minAmount',
-                    'product': '5b4f676843487f5da43df67d',
+                    'product': mongoose.Types.ObjectId('5b4f676843487f5da43df67d'),
                     'minAmount': 0,
                     'priceTo': 309.99
                 },
                 {
                     'type': 'discount',
                     'description': 'Gets a discount when the number of products are greather or equal minAmount',
-                    'product': '5b4f676843487f5da43df67c',
+                    'product': mongoose.Types.ObjectId('5b4f676843487f5da43df67c'),
                     'minAmount': 3,
                     'priceTo': 389.99
                 }

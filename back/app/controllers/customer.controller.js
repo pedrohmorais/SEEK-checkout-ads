@@ -29,6 +29,10 @@ exports.create = (req, res) => {
 // Retrieve and return all customers from the database.
 exports.findAll = (req, res) => {
     Customer.find()
+    .populate({
+        path: 'privileges.product',
+        model: 'Product'
+    })
     .then(customers => {
         res.send(customers);
     }).catch(err => {
