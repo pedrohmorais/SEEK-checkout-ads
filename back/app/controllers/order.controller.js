@@ -24,7 +24,7 @@ function calcOrders(customer,orders){
         skus.push(order.product.productId)
         
         if(!amountProducts[order.product._id]){
-            amountP = orders.filter(o=>o.product._id==order.product._id)
+            amountP = orders.filter(o=>o.product._id.toString()==order.product._id.toString())
             amountP = amountP && amountP.length > 0 ? amountP.length : 0
             amountProducts[order.product._id] = amountP
         }
@@ -34,11 +34,11 @@ function calcOrders(customer,orders){
         }
         amountP = amountProducts[order.product._id]
         let priceProduct = order.product.price
-
+        
         // Apply the rules
+        let newPrice = priceProduct
+        let newAmount = amountP
         privileges.forEach(orderRule => {
-            let newPrice = priceProduct
-            let newAmount = amountP
             if(order.product._id.toString() == orderRule.product._id.toString()) {
                 switch (orderRule.type) {
                     case "discount":
@@ -57,23 +57,23 @@ function calcOrders(customer,orders){
                             orderRule.take > orderRule.pay
                         ) {
                             // Removes the free products from amount 
-                            newAmount = (amountP/orderRule.take) * orderRule.pay
+                            let takeDiff = Math.floor(amountP/orderRule.take)
+                            newAmount = takeDiff == 0 ? amountP : (takeDiff) * orderRule.pay
                         }
                         break;
                     default:
                         break;
                 }
             }
-            // Calculates new price and new amount to total value
-            console.log(`Calculating new amount (${newAmount}) for ${order.product.productId} (new Value (${newPrice}))`)
-            total += newPrice * newAmount
         });
+        // Calculates new price and new amount to total value
+        total += newPrice * newAmount
     });
 
     return {
         customerId: customer._id,
         customerName: customer.name,
-        skus:skus,
+        skus:skus.sort(),
         total:total
     }
 }

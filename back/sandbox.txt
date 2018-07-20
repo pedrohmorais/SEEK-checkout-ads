@@ -199,10 +199,53 @@ customers:
         "product":"5b4f676843487f5da43df67c",
         "customer":"5b50b8c5aecf1464c8a2a9f5"
     }
-    classic
+    classic 4x
     {
         "product":"5b4f676843487f5da43df67b",
         "customer":"5b50b8c5aecf1464c8a2a9f5"
     }
 
 
+
+    APPLE
+    id = 5b50b8c5aecf1464c8a2a9f6
+    3x standout = 5b4f676843487f5da43df67d
+    {
+        "product":"5b4f676843487f5da43df67d",
+        "customer":"5b50b8c5aecf1464c8a2a9f6"
+    }
+    1x premium = 5b4f676843487f5da43df67c
+    {
+        "product":"5b4f676843487f5da43df67c",
+        "customer":"5b50b8c5aecf1464c8a2a9f6"
+    }
+
+    Ford : 
+    id = 5b50b8c5aecf1464c8a2a9f8
+    3x premium
+    {
+        "product":"5b4f676843487f5da43df67c",
+        "customer":"5b50b8c5aecf1464c8a2a9f8"
+    }
+    3x standout
+    {
+        "product":"5b4f676843487f5da43df67d",
+        "customer":"5b50b8c5aecf1464c8a2a9f8"
+    }
+    3x classic
+    {
+        "product":"5b4f676843487f5da43df67b",
+        "customer":"5b50b8c5aecf1464c8a2a9f8"
+    }
+
+
+
+
+        "productId": "classic",
+        "_id": "5b4f676843487f5da43df67b",
+
+        "productId": "premium",
+        "_id": "5b4f676843487f5da43df67c",
+
+        "productId": "standout",
+        "_id": "5b4f676843487f5da43df67d",
