@@ -39,6 +39,12 @@ require('./app/routes/privilege.routes.js')(app);
 require('./app/routes/customer.routes.js')(app);
 require('./app/routes/order.routes.js')(app);
 
+function aplicarDesconto(valor, desconto){
+   if(desconto > valor) return 0
+   return valor - desconto
+}
+module.exports = {aplicarDesconto}
+
 // seed database
 seederProduct.seed()
 seederCustomer.seed()

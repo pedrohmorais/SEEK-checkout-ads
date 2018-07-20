@@ -1,27 +1,9 @@
 const Product = require('../models/product.model.js');
+const productsData = require('./data/products.js')
 
 exports.seed = () => {
     console.log("Seeding products...");
-    let products = [
-        {
-            "_id" : "5b4f676843487f5da43df67b",
-            "productId" : "classic",
-            "name" : "Classic Ad",
-            "price" : 269.99,
-        },
-        {
-            "_id" : "5b4f676843487f5da43df67d",
-            "productId" : "standout",
-            "name" : "Standout Ad",
-            "price" : 322.99,
-        },
-        {
-            "_id" : "5b4f676843487f5da43df67c",
-            "productId" : "premium",
-            "name" : "Premium Ad",
-            "price" : 394.99,
-        }
-    ]
+    let products = productsData.value
     
     products.forEach(p => {
         let product = new Product(p);

@@ -1,82 +1,6 @@
 const Order = require('../models/order.model.js');
 const Customer = require('../models/customer.model.js');
-
-//Calculates the order value based in the customer pricing rules
-function calcOrders(customer,orders){
-    const privileges = customer.privileges
-    var total = 0
-    var skus = []
-
-    if(!privileges || privileges.length==0){
-        orders.forEach(order => {
-            total += order.product.price
-            skus.push(order.product.productId)
-        });
-    }
-
-    var amountProducts = []
-    orders.forEach(order => {
-        var amountP = 0
-        if(!order.product) {
-            return;
-        }
-        // Adds sku to array
-        skus.push(order.product.productId)
-        
-        if(!amountProducts[order.product._id]){
-            amountP = orders.filter(o=>o.product._id.toString()==order.product._id.toString())
-            amountP = amountP && amountP.length > 0 ? amountP.length : 0
-            amountProducts[order.product._id] = amountP
-        }
-        else {
-            // This action can execute once one time per product id, so if is repeated, the action breaks
-            return;
-        }
-        amountP = amountProducts[order.product._id]
-        let priceProduct = order.product.price
-        
-        // Apply the rules
-        let newPrice = priceProduct
-        let newAmount = amountP
-        privileges.forEach(orderRule => {
-            if(order.product._id.toString() == orderRule.product._id.toString()) {
-                switch (orderRule.type) {
-                    case "discount":
-                        // Sets new price
-                        if(
-                            !Number.isInteger(orderRule.minAmount) || 
-                            orderRule.minAmount <= amountP
-                        ) {
-                            newPrice = orderRule.priceTo ? orderRule.priceTo : newPrice;
-                        }
-                        break;
-                    case "takepay":
-                        if(
-                            orderRule.take && orderRule.pay &&
-                            Number.isInteger(orderRule.take) && Number.isInteger(orderRule.pay) &&
-                            orderRule.take > orderRule.pay
-                        ) {
-                            // Removes the free products from amount 
-                            let takeDiff = Math.floor(amountP/orderRule.take)
-                            newAmount = takeDiff == 0 ? amountP : (takeDiff) * orderRule.pay
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        // Calculates new price and new amount to total value
-        total += newPrice * newAmount
-    });
-
-    return {
-        customerId: customer._id,
-        customerName: customer.name,
-        skus:skus.sort(),
-        total:total
-    }
-}
+const OrderBusiness = require('../business/order.business.js')
 
 async function getCustomerById(customerId){
     return await Customer.findById(customerId)
@@ -111,13 +35,9 @@ exports.calculateByCustomer = (req, res) => {
                 });            
             }
 
-            let resp = {
-                customer: customer,
-                orders: orders
-            }
-            //res.send(resp);
-
-            totalOrder = calcOrders(customer,orders)
+            var orderClass = new OrderBusiness(customer,orders)
+            orderClass.calcOrders()
+            totalOrder = orderClass.getData()
 
             res.send(totalOrder);
         })
