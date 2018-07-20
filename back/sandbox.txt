@@ -191,3 +191,18 @@ customers:
 
 
     379.99 * 4 = 1519.96
+
+
+    UNILEVER: 
+    premium
+    {
+        "product":"5b4f676843487f5da43df67c",
+        "customer":"5b50b8c5aecf1464c8a2a9f5"
+    }
+    classic
+    {
+        "product":"5b4f676843487f5da43df67b",
+        "customer":"5b50b8c5aecf1464c8a2a9f5"
+    }
+
+

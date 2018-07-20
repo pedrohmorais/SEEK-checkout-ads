@@ -17,49 +17,59 @@ function calcOrders(customer,orders){
     var amountProducts = []
     orders.forEach(order => {
         var amountP = 0
+        if(!order.product) {
+            return;
+        }
+        // Adds sku to array
+        skus.push(order.product.productId)
+        
         if(!amountProducts[order.product._id]){
             amountP = orders.filter(o=>o.product._id==order.product._id)
             amountP = amountP && amountP.length > 0 ? amountP.length : 0
             amountProducts[order.product._id] = amountP
         }
+        else {
+            // This action can execute once one time per product id, so if is repeated, the action breaks
+            return;
+        }
         amountP = amountProducts[order.product._id]
+        let priceProduct = order.product.price
 
         // Apply the rules
-        privileges.forEach(privilege => {
-            if(privilege.product._id == order.product._id) {
+        privileges.forEach(orderRule => {
+            let newPrice = priceProduct
+            let newAmount = amountP
+            if(order.product._id.toString() == orderRule.product._id.toString()) {
                 switch (orderRule.type) {
                     case "discount":
-                        //continue from here
+                        // Sets new price
+                        if(
+                            !Number.isInteger(orderRule.minAmount) || 
+                            orderRule.minAmount <= amountP
+                        ) {
+                            newPrice = orderRule.priceTo ? orderRule.priceTo : newPrice;
+                        }
                         break;
                     case "takepay":
-                        
+                        if(
+                            orderRule.take && orderRule.pay &&
+                            Number.isInteger(orderRule.take) && Number.isInteger(orderRule.pay) &&
+                            orderRule.take > orderRule.pay
+                        ) {
+                            // Removes the free products from amount 
+                            newAmount = (amountP/orderRule.take) * orderRule.pay
+                        }
                         break;
                     default:
                         break;
                 }
             }
+            // Calculates new price and new amount to total value
+            console.log(`Calculating new amount (${newAmount}) for ${order.product.productId} (new Value (${newPrice}))`)
+            total += newPrice * newAmount
         });
-
-        skus.push(order.product.productId)
-        total += order.product.price
     });
 
-
-    // let orderRules = rules.filter(rule => rule.product._id === order.product._id)
-    // if(orderRules && orderRules.length>0){
-    //     orderRules.forEach(orderRule => {
-    //         switch (orderRule.type) {
-    //             case "discount":
-                    
-    //                 break;
-    //             case "takepay":
-                    
-    //                 break;
-    //             default:
-    //                 break;
-    //         }
-    //     });
-    // }
     return {
         customerId: customer._id,
         customerName: customer.name,
