@@ -7,6 +7,8 @@ const seederOrder = require('./app/seeder/order.seeder.js');
 const authconfig = require('./config/auth.config.js')
 const session = require('express-session');
 const authController = require('./app/controllers/auth.controller.js')
+var cors = require('cors');
+
 
 // create express app
 const app = express();
@@ -16,6 +18,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json())
+
+// set cors
+app.use(cors({origin: 'http://localhost:4200'}));
 
 // config session
 app.set('trust proxy', 1) // trust first proxy
