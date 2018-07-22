@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const seederUser = require('./app/seeder/user.seeder.js');
 const seederProduct = require('./app/seeder/product.seeder.js');
 const seederCustomer = require('./app/seeder/customer.seeder.js');
 const seederOrder = require('./app/seeder/order.seeder.js');
@@ -51,6 +52,7 @@ require('./app/routes/order.routes.js')(app);
 require('./app/routes/user.routes.js')(app);
 
 // seed database
+seederUser.seed()
 seederProduct.seed()
 seederCustomer.seed()
 seederOrder.seed()
