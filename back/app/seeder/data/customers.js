@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 exports.value = [
     {
+        "privileges": [],
+        "_id": "5b54b40b26c9bb315072b43d",
+        "name": "DEFAULT",
+    },
+    {
         "_id" : "5b50b8c5aecf1464c8a2a9f5",
         "name": "UNILEVER",
         "privileges":[

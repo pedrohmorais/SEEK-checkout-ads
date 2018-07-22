@@ -20,7 +20,9 @@ class OrderBusiness {
                 this.total += order.product.price
                 this.skus.push(order.product.productId)
             });
+            return true
         }
+        return false
     }
 
     // Validates rule discount
@@ -76,7 +78,8 @@ class OrderBusiness {
     calcOrders(){
         const privileges = this.customer.privileges
 
-        this.verifySimpleOrders()
+        if(this.verifySimpleOrders())
+            return
 
         this.orders.forEach(order => {
             if(!order.product) {

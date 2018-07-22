@@ -1,5 +1,21 @@
 const mongoose = require('mongoose');
 exports.value = [
+    //default
+    {
+        "_id" : mongoose.Types.ObjectId("5b54b4e166a4df27f0d13686"),
+        "product" : mongoose.Types.ObjectId("5b4f676843487f5da43df67c"),
+        "customer" : mongoose.Types.ObjectId("5b54b40b26c9bb315072b43d"),
+    },
+    {
+        "_id" : mongoose.Types.ObjectId("5b54b4ee66a4df27f0d13687"),
+        "product" : mongoose.Types.ObjectId("5b4f676843487f5da43df67b"),
+        "customer" : mongoose.Types.ObjectId("5b54b40b26c9bb315072b43d"),
+    },
+    {
+        "_id" : mongoose.Types.ObjectId("5b54b4f866a4df27f0d13688"),
+        "product" : mongoose.Types.ObjectId("5b4f676843487f5da43df67d"),
+        "customer" : mongoose.Types.ObjectId("5b54b40b26c9bb315072b43d"),
+    },
     // Nike
     {
         "_id" : mongoose.Types.ObjectId("5b510233254cee76f85d62d0"),
