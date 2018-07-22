@@ -3,6 +3,9 @@ const bodyParser = require('body-parser');
 const seederProduct = require('./app/seeder/product.seeder.js');
 const seederCustomer = require('./app/seeder/customer.seeder.js');
 const seederOrder = require('./app/seeder/order.seeder.js');
+const authconfig = require('./config/auth.config.js')
+const session = require('express-session');
+const authController = require('./app/controllers/auth.controller.js')
 
 // create express app
 const app = express();
@@ -12,6 +15,12 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json())
+
+// config session
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+    secret: authconfig.secret
+}))
 
 // Configuring the database
 const dbConfig = require('./config/database.config.js');
@@ -34,16 +43,12 @@ app.get('/', (req, res) => {
 });
 
 // Require Products routes
+require('./app/routes/auth.routes.js')(app);
 require('./app/routes/product.routes.js')(app);
 require('./app/routes/privilege.routes.js')(app);
 require('./app/routes/customer.routes.js')(app);
 require('./app/routes/order.routes.js')(app);
-
-function aplicarDesconto(valor, desconto){
-   if(desconto > valor) return 0
-   return valor - desconto
-}
-module.exports = {aplicarDesconto}
+require('./app/routes/user.routes.js')(app);
 
 // seed database
 seederProduct.seed()

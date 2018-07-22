@@ -14,9 +14,14 @@
   "author": "Pedro Morais",
   "license": "ISC",
   "dependencies": {
+    "@types/mongodb": "^3.1.2",
+    "@types/mongoose": "^5.2.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.4",
     "tap-spec": "^5.0.0",
     "tape": "^4.9.1"
