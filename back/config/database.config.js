@@ -1,3 +1,5 @@
+const dotEnv = require('dotenv').load();
+
 module.exports = {
-    url: 'mongodb://localhost:27017/checkout-ads'
+    url: process.env.MONGO_URL
 }
