@@ -4,6 +4,7 @@ import { LoginService } from '../../services/login.service';
 import { ProductService } from '../../services/product.service';
 import { CustomerService } from '../../services/customers.service';
 import { Customer } from '../../model/customer.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-customers',
@@ -17,7 +18,9 @@ export class CustomersComponent implements OnInit {
 
   constructor(
     private productService:ProductService,
-    private customerService:CustomerService
+    private customerService:CustomerService,
+    private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -54,5 +57,8 @@ export class CustomersComponent implements OnInit {
     return products.find(p=>p._id==id) || product
   }
 
+  viewOrders(customerId:string) {
+    this.router.navigate(['/customers/orders/'+customerId])
+  }
 
 }

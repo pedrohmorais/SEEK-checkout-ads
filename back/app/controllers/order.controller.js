@@ -1,6 +1,7 @@
 const Order = require('../models/order.model.js');
 const Customer = require('../models/customer.model.js');
 const OrderBusiness = require('../business/order.business.js')
+const payload = require('../../config/payload.config.js');
 
 async function getCustomerById(customerId){
     return await Customer.findById(customerId)
@@ -30,27 +31,21 @@ exports.calculateByCustomer = (req, res) => {
         getOrdersByCustomer(customer._id)
         .then(orders=>{
             if(!orders) {
-                return res.status(400).send({
-                    message: "Orders not found for customer " + customer.name
-                });            
+                return res.status(400).send(payload.error("Orders not found for customer " + customer.name));            
             }
 
             var orderClass = new OrderBusiness(customer,orders)
             orderClass.calcOrders()
             totalOrder = orderClass.getData()
 
-            res.send(totalOrder);
+            res.send(payload.success(totalOrder));
         })
         .catch(err=>{
-            res.status(500).send({
-                message: err.message || "Some error occurred while getting the customer orders."
-            });
+            res.status(500).send(payload.error(err.message || "Some error occurred while getting the customer orders."));
         })
     })
     .catch(err=>{
-        res.status(500).send({
-            message: err.message || "Some error occurred while creating the Order."
-        });
+        res.status(500).send(payload.error(err.message || "Some error occurred while creating the Order."));
     })
 }
 

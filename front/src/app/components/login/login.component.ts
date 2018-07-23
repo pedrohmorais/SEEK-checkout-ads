@@ -21,12 +21,19 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if(this.route.snapshot.params['loggout']) {
+      this.logout()
+    }
     this.loginForm = this.fb.group({
       email: this.fb.control('', [Validators.required,Validators.email]),
       password: this.fb.control('',[Validators.required])
     })
   }
 
+  logout(){
+    this.loginService.logout()
+    this.router.navigate(['/login'])
+  }
   login(){
     this.loginService.loginAPI(this.loginForm.value.email,this.loginForm.value.password).subscribe(r=>{
       this.router.navigate(['/products'])

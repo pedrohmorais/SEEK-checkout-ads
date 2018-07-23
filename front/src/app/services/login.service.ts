@@ -24,6 +24,11 @@ export class LoginService extends BaseService {
         return this.isLoggedIn ? super.httpJsonAuth(this.token) : {}
     }
 
+    logout(){
+        this.user = undefined
+        this.token = undefined
+    }
+
     loginAPI(email:string,password:string): Observable<any>{
         let endpoint = this.UrlServiceV1 + "/auth"
         var user = <User>{
