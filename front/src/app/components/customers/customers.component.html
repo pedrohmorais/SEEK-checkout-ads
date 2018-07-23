@@ -1,1 +1,46 @@
-Customer works !
+<app-header></app-header>
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h1 class="display-4">Customers</h1>
+</div>
+<div class="container">
+  <div class="card-deck mb-3 text-center">
+      <div class="card-columns">
+          <div *ngFor="let customer of customers" class="card">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{customer.name}}</h4>
+                </div>
+                <div *ngIf="customer.privileges.length>0" class="card-body">
+                    <h4 class="card-title">Pricing privileges:</h4>
+                    <ng-container *ngFor="let privilege of customer.privileges">
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>
+                                <strong>Type:</strong> {{privilege.type}}
+                            </li>
+                            <li>
+                                <strong>Description:</strong> {{privilege.description}}
+                            </li>
+                            <li>
+                                <strong>Product:</strong> {{getProductById(privilege.product).name}}
+                            </li>
+                        </ul>
+                        <hr/>
+                    </ng-container>    
+                    <button type="button" class="btn btn-lg btn-block btn-outline-primary" (click)="viewOrders(customer._id)">View orders</button>
+                </div>
+                <div *ngIf="customer.privileges.length==0" class="card-body">
+                    <p class="card-text">No privileges for this customer</p>
+                    <button type="button" class="btn btn-lg btn-block btn-outline-primary" (click)="viewOrders(customer._id)">View orders</button>
+                </div>
+          </div>         
+      </div>
+  </div>
+</div>
+
+<div *ngIf="isValid;else other_content">
+        content here ...
+    </div>
+    
+    <ng-template #other_content>other content here...</ng-template>
+
+
+    b4-card

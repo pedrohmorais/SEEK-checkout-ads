@@ -16,6 +16,8 @@ import { ProductsComponent } from './components/products/products.component';
 import { ProductService } from './services/product.service';
 import { HeaderComponent } from './shared/header/header.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import { CustomerService } from './services/customers.service';
+import { OrdersComponent } from './components/orders/orders.component';
 
 @NgModule({
   imports: [
@@ -39,11 +41,13 @@ import { AuthGuardService } from './services/auth-guard.service';
     LoginComponent,
     CustomersComponent,
     ProductsComponent,
-    HeaderComponent
+    HeaderComponent,
+    OrdersComponent
   ],
   providers: [
     LoginService,
     ProductService,
+    CustomerService,
     AuthGuardService
   ],
   bootstrap: [AppComponent]
