@@ -22,16 +22,6 @@ $ npm install
 $ node server.js
 ```
 
-### Instalação via Docker
-
-Instale o docker no seu ambiente e execute os comandos abaixo:
-
-```
-$ cd back
-$ docker-compose --no-cache
-$ docker-compose up
-```
-
 ### Testando aplicação
 
 Para rodar os testes unitários da aplicação utilize o comando: 
@@ -67,17 +57,6 @@ $ npm install
 $ npm start
 ```
 
-### Instalação via Docker
-
-(Ainda não implementada)
-Instale o docker no seu ambiente e execute os comandos abaixo:
-
-```
-$ cd front
-$ docker-compose --no-cache
-$ docker-compose up
-```
-
 ### Credenciais de acesso
 
 As credenciais de acesso para fazer o login na aplicação são:
@@ -90,3 +69,17 @@ As credenciais de acesso para fazer o login na aplicação são:
 Na aplicação front-end foi utilizado o Angular na versão 6 com typescript, SASS e bootstrap v4.
 Por falta de tempo, algumas refatorações não foram feitas.
 O mesmo **payload** está sendo utilizado no front e back para manter um padrão nas "requests" e "responses". Porém nem todos os "endpoints" tiveram o payload implementado.
+
+# Instalação via Docker
+
+Instale o docker no seu ambiente e execute os comandos abaixo:
+
+```
+$ docker-compose build --no-cache
+$ docker-compose up
+```
+
+Serão criadas três imagens no docker:
+ - mongodb:27017
+ - app-backend:3000
+ - app-frontend:4200

@@ -1,16 +1,22 @@
 version: '3'
 services:
+  app-frontend:
+    command: npm start
+    build: ./front
+    ports:
+    - '4200:4200'
   app-backend:
     command: npm start
-    build: .
+    build: ./back
     ports:
-     - "3000:3000"
+    - "3000:3000"
     links:
-        - mongodb
+    - mongodb
     depends_on:
-        - mongodb
+    - mongodb
   mongodb:
     image: mongo:latest
     container_name: "mongodb"
     ports:
-      - 27017:27017
+    - 27017:27017
+    
