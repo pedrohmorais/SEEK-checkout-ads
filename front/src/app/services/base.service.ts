@@ -1,6 +1,5 @@
 import { ResponseContentType } from '@angular/http';
 import { OnInit,Injectable } from '@angular/core';
-import { Http, Headers, Response, Request } from "@angular/http"
 import { HttpHeaders } from "@angular/common/http"
 import { Observable } from "rxjs"
 import { Router } from "@angular/router"
@@ -23,15 +22,15 @@ export abstract class  BaseService {
 
     protected httpJsonOptions(){
         return {
-            headers: new Headers({'Content-Type': 'application/json'})
+            headers: new HttpHeaders({'Content-Type': 'application/json'})
         }
     }
 
-    protected httpJsonAuth(){
+    protected httpJsonAuth(token:string){
         return {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'app-access-token': "token"
+                'app-access-token': token
             })
         }
     }

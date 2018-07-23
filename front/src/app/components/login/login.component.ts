@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../services/login.service';
+import {FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/forms'
 
+import {FormsModule,ReactiveFormsModule} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -8,11 +11,25 @@ import { LoginService } from '../../services/login.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private loginService:LoginService) { }
+  loginForm: FormGroup
+
+  constructor(
+    private loginService:LoginService,
+    private fb:FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
-    this.loginService.loginAPI().subscribe(r=>{
-      console.log(r)
+    this.loginForm = this.fb.group({
+      email: this.fb.control('', [Validators.required,Validators.email]),
+      password: this.fb.control('',[Validators.required])
+    })
+  }
+
+  login(){
+    this.loginService.loginAPI(this.loginForm.value.email,this.loginForm.value.password).subscribe(r=>{
+      this.router.navigate(['/products'])
     })
   }
 

@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 // set cors
-app.use(cors({origin: 'http://localhost:4200'}));
+app.use(cors({origin: authconfig.frontUrl}));
 
 // config session
 app.set('trust proxy', 1) // trust first proxy

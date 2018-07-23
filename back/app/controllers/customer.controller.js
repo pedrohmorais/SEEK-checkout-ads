@@ -1,4 +1,5 @@
 const Customer = require('../models/customer.model.js');
+const payload = require('../../config/payload.config.js');
 
 // Create and Save a new Customer
 exports.create = (req, res) => {
@@ -38,11 +39,9 @@ async function pvtFindAll(){
 exports.findAll = (req, res) => {
     pvtFindAll()
     .then(customers => {
-        res.send(customers);
+        res.send(payload.success(customers));
     }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while retrieving customers."
-        });
+        res.status(500).send(payload.error(err.message || "Some error occurred while retrieving customers."));
     });
 };
 
@@ -55,16 +54,12 @@ exports.findOne = (req, res) => {
     })
     .then(customer => {
         if(!customer) {
-            return res.status(404).send({
-                message: "Customer not found with id " + req.params.id
-            });            
+            return res.status(404).send(payload.error("Customer not found with id " + req.params.id));            
         }
-        res.send(customer);
+        res.send(payload.success(customer));
     }).catch(err => {
         if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Customer not found with id " + req.params.id
-            });                
+            return res.status(404).send(payload.error("Customer not found with id " + req.params.id));                
         }
         return res.status(500).send({
             message: "Error retrieving customer with id " + req.params.id

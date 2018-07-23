@@ -1,4 +1,5 @@
 const Product = require('../models/product.model.js');
+const payload = require('../../config/payload.config.js');
 
 // Create and Save a new Product
 exports.create = (req, res) => {
@@ -37,11 +38,9 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
     Product.find()
     .then(products => {
-        res.send(products);
+        res.send(payload.success(products));
     }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while retrieving products."
-        });
+        res.status(500).send(payload.error(err.message || "Some error occurred while retrieving products."));
     });
 };
 
@@ -50,20 +49,16 @@ exports.findOne = (req, res) => {
     Product.findById(req.params.id)
     .then(product => {
         if(!product) {
-            return res.status(404).send({
-                message: "Product not found with id " + req.params.id
-            });            
+            return res.status(404).send(
+                payload.error("Product not found with id " + req.params.id)
+            );            
         }
-        res.send(product);
+        res.send(payload.success(product));
     }).catch(err => {
         if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Product not found with id " + req.params.id
-            });                
+            return res.status(404).send(payload.error("Product not found with id " + req.params.id));                
         }
-        return res.status(500).send({
-            message: "Error retrieving product with id " + req.params.id
-        });
+        return res.status(500).send(payload.error("Error retrieving product with id " + req.params.id));
     });
 };
 

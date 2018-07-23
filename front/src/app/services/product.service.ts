@@ -4,12 +4,13 @@ import { BaseService } from './base.service';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/do'
+import { User } from '../model/user.model';
 import { HttpClient } from '@angular/common/http';
-import { Customer } from '../model/customer.model';
+import { Product } from '../model/product.model';
 import { LoginService } from './login.service';
 
 @Injectable()
-export class CustomerService extends BaseService {
+export class ProductService extends BaseService {
     constructor(
         private http:HttpClient,
         private loginService:LoginService
@@ -17,10 +18,9 @@ export class CustomerService extends BaseService {
         super();
     }
 
-    getAll(): Observable<Customer[]>{
-        let endpoint = this.UrlServiceV1 + "/customers"
-
-        return this.http.get<Customer[]>(endpoint, this.loginService.setAuthHeader())
+    getAll(): Observable<Product[]>{
+        let endpoint = this.UrlServiceV1 + "/products"
+        return this.http.get<Product[]>(endpoint, this.loginService.setAuthHeader())
             .map(super.extractData)
             .catch(this.serviceError);
     }

@@ -3,29 +3,41 @@ import { Observable } from 'rxjs';
 import { BaseService } from './base.service';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map'
-import {Http, Headers, RequestOptions} from '@angular/http'
-
-import { User } from '../model/user';
+import 'rxjs/add/operator/do'
+import { User } from '../model/user.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class LoginService extends BaseService {
-    constructor(private http:Http){
+    constructor(private http:HttpClient){
         super();
     }
 
-    loginAPI(): Observable<any>{
+    user:User
+    token:string    
+
+    isLoggedIn() : boolean {
+        return this.user !== undefined && this.token !== undefined
+    }
+
+    setAuthHeader() {
+        return this.isLoggedIn ? super.httpJsonAuth(this.token) : {}
+    }
+
+    loginAPI(email:string,password:string): Observable<any>{
         let endpoint = this.UrlServiceV1 + "/auth"
         var user = <User>{
-            email:"testuser@onlyfortests.testing",
-            password: "123456"
+            email:email,
+            password: password
         }
-       
-        return this.http.post(endpoint,
+        return this.http.post<User>(endpoint,
             JSON.stringify(user),
-            new RequestOptions(super.httpJsonOptions()))
+            super.httpJsonOptions())
             .map(super.extractData)
-            .catch(this.serviceError);
+            .catch(this.serviceError)
+            .do(resp=>{
+                this.user = resp.user
+                this.token = resp.token
+            });
     }
-   
 }
-//this.httpJsonOptions()
