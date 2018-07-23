@@ -20,9 +20,17 @@ export class ProductsComponent implements OnInit {
     this.getProducts()
   }
 
+  sortByPrice(a,b) {
+    if (a.price < b.price)
+      return -1;
+    if (a.price > b.price)
+      return 1;
+    return 0;
+  }
+
   getProducts(){
     this.productService.getAll().subscribe(products => {
-      this.products = products
+      this.products = products.sort(this.sortByPrice)
     })
   }
 
